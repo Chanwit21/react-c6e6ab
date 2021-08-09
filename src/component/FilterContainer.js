@@ -13,7 +13,7 @@ function FilterContainer(props) {
       const arrayFilterText = newTransactionList.filter(item => {
         for (let key in item) {
           if (key !== 'id' && key !== 'month' && key !== 'year') {
-            if (item[key].includes(searchText)) {
+            if (item[key].toLowerCase().includes(searchText.toLowerCase())) {
               return true;
             }
           }
@@ -47,7 +47,7 @@ function FilterContainer(props) {
       const arrayFilterText = arrayFilterMonth.filter(item => {
         for (let key in item) {
           if (key !== 'id' && key !== 'month' && key !== 'year') {
-            if (item[key].includes(searchText)) {
+            if (item[key].toLowerCase().includes(searchText.toLowerCase())) {
               return true;
             }
           }
@@ -65,7 +65,7 @@ function FilterContainer(props) {
       const arrayFilterText = arrayFilterYear.filter(item => {
         for (let key in item) {
           if (key !== 'id' && key !== 'month' && key !== 'year') {
-            if (item[key].includes(searchText)) {
+            if (item[key].toLowerCase().includes(searchText.toLowerCase())) {
               return true;
             }
           }
@@ -97,7 +97,7 @@ function FilterContainer(props) {
       const arrayFilterText = arrayFilterYear.filter(item => {
         for (let key in item) {
           if (key !== 'id' && key !== 'month' && key !== 'year') {
-            if (item[key].includes(searchText)) {
+            if (item[key].toLowerCase().includes(searchText.toLowerCase())) {
               return true;
             }
           }
@@ -117,7 +117,8 @@ function FilterContainer(props) {
     // console.log(e.target.value);
     setSearchText(e.target.value);
     detectFilterTransaction(
-      filterOutPut(e.target.value, filterMonth, filterYear)
+      filterOutPut(e.target.value, filterMonth, filterYear),
+      e.target.value
     );
   };
 
@@ -125,7 +126,8 @@ function FilterContainer(props) {
     // console.log(e.target.value);
     setFilterMonth(e.target.value);
     detectFilterTransaction(
-      filterOutPut(searchText, e.target.value, filterYear)
+      filterOutPut(searchText, e.target.value, filterYear),
+      searchText
     );
   };
 
@@ -133,7 +135,8 @@ function FilterContainer(props) {
     // console.log(e.target.value);
     setFilterYear(e.target.value);
     detectFilterTransaction(
-      filterOutPut(searchText, filterMonth, e.target.value)
+      filterOutPut(searchText, filterMonth, e.target.value),
+      searchText
     );
   };
 

@@ -81,7 +81,6 @@ function FormAddTransaction(props) {
         console.log(item.value);
         item['show require'] = true;
         isAllInputHaveValue = false;
-        // console.log("Test");
       }
     }
 
@@ -114,35 +113,36 @@ function FormAddTransaction(props) {
         comment
       };
       detectClickSaveButtonInForm(objToAdd);
+      setInputStatus([
+        {
+          name: 'payee',
+          value: '',
+          'show require': false
+        },
+        {
+          name: 'category',
+          value: '',
+          'show require': false
+        },
+        {
+          name: 'amount',
+          value: '',
+          'show require': false
+        },
+        {
+          name: 'date',
+          value: '',
+          'show require': false
+        },
+        {
+          name: 'comment',
+          value: ''
+        }
+      ]);
     } else {
       setInputStatus(newinputStatus);
+      // console.log(newinputStatus);
     }
-    setInputStatus([
-      {
-        name: 'payee',
-        value: '',
-        'show require': false
-      },
-      {
-        name: 'category',
-        value: '',
-        'show require': false
-      },
-      {
-        name: 'amount',
-        value: '',
-        'show require': false
-      },
-      {
-        name: 'date',
-        value: '',
-        'show require': false
-      },
-      {
-        name: 'comment',
-        value: ''
-      }
-    ]);
   }
 
   const renderCatagory = (!onTransactionType

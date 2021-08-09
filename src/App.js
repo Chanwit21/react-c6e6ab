@@ -51,6 +51,7 @@ function App() {
   const [filterTransactionList, setFilterTransactionList] = useState(
     transactionList
   );
+  const [textFilter, setTextFilter] = useState('');
 
   function runId(array) {
     if (array.length !== 0) {
@@ -66,11 +67,52 @@ function App() {
       { id: runId(transactionList), ...objectToAdd }
     ]);
 
-    // ยัง  Add พร้อมกับ Filter ไม่สมบูรณ์
-    setFilterTransactionList([
-      ...transactionList,
-      { id: runId(transactionList), ...objectToAdd }
-    ]);
+    // ยัง  Add พร้อมกับ Filter
+    const newFilterTransactionList = [...filterTransactionList];
+    let compareMonthYear = false;
+    for (let val of newFilterTransactionList) {
+      if (objectToAdd.month === val.month || objectToAdd.year === val.year) {
+        compareMonthYear = true;
+      }
+    }
+    let compareText = false;
+    for (let val of newFilterTransactionList) {
+      for (let key in val) {
+        if (key !== 'id' && key !== 'month' && key !== 'year') {
+          for (let key1 in objectToAdd) {
+            for (let i of objectToAdd[key1]) {
+              if (val[key].toLowerCase().includes(i.toLowerCase())) {
+                compareText = true;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    console.log(compareMonthYear);
+    console.log(compareText);
+
+    if (textFilter) {
+      if (compareMonthYear || compareText) {
+        setFilterTransactionList([
+          ...filterTransactionList,
+          { id: runId(transactionList), ...objectToAdd }
+        ]);
+      } else {
+        setFilterTransactionList([...filterTransactionList]);
+      }
+    } else {
+      if (compareMonthYear) {
+        setFilterTransactionList([
+          ...filterTransactionList,
+          { id: runId(transactionList), ...objectToAdd }
+        ]);
+      } else {
+        setFilterTransactionList([...filterTransactionList]);
+      }
+    }
+
     // console.log(objectToAdd);
   };
 
@@ -84,8 +126,9 @@ function App() {
   };
 
   // รับ Filter มา Set ค่า
-  const detectFilterTransaction = newTransaction => {
+  const detectFilterTransaction = (newTransaction, text) => {
     setFilterTransactionList(newTransaction);
+    setTextFilter(text);
   };
 
   // console.log(transactionList);
